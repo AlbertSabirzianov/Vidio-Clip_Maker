@@ -13,6 +13,8 @@ class VidioMaker:
     Класс для составления видио клипа.
     """
 
+    VIDIO_DURATION_IN_SECONDS = 2
+
     def __init__(self, path_vidio1, path_vidio2, path_audio):
         self.__path_vidio1 = path_vidio1
         self.__path_vidio2 = path_vidio2
@@ -47,7 +49,7 @@ class VidioMaker:
 
     def __get_second_video_file(self) -> VideoFileClip:
         """
-        Возвращает первый видиоклип.
+        Возвращает второй видиоклип.
         """
 
         second_video_list = os.listdir(self.__path_vidio2)
@@ -69,6 +71,7 @@ class VidioMaker:
             final_vidio = concatenate_videoclips([first_vidio, second_vidio])
             final_vidio.audio = audio
 
+            final_vidio = final_vidio.subclip(0, self.VIDIO_DURATION_IN_SECONDS)
             final_vidio.write_videofile('New_vidio.mp4')
 
             print(text2art('Success'))
